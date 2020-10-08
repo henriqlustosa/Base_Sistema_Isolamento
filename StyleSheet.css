@@ -1,0 +1,40 @@
+﻿
+	.newStyle1 {
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	background-color: gray;
+}
+#pagina {
+	width: 780px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#content1 {
+	margin-right: auto;
+	margin-left: auto;
+	width: 780px;
+	background-color: #FFFFFF;
+}
+
+.centro  {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+.titulo {
+	font-family: Verdana;
+	font-size: x-large;
+	font-weight: bold;
+	font-style: normal;
+	text-align: center;
+}
+
+#content2 {
+	margin-top: 15px;
+	margin-bottom: 15px;
+
+
+}

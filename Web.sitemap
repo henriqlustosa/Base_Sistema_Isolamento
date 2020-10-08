@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode  >
+
+
+
+    
+    <siteMapNode title="Laboratório">
+      <siteMapNode url="~/Laboratorio/Laboratorio.aspx" title="Cadastrar Pacientes Infectados"  description="" />
+      <siteMapNode url="~/Laboratorio/AdicionarMat.aspx" title="Cadastrar Material" />
+      <siteMapNode url="~/Laboratorio/AdicionarMicro.aspx" title="Cadastrar Microrganismo" />
+      <siteMapNode url="~/Laboratorio/DeletarRegistro.aspx" title="Excluir Registro" />
+   </siteMapNode>
+    
+    <siteMapNode url="" title="CCIH" roles="*">
+      <siteMapNode url="~/CCIH/CCIH.aspx" title="Pacientes Isolados" />
+    </siteMapNode>
+    <siteMapNode url="" title="Relatório" roles="*">
+      <siteMapNode url="~/Relatorio/RelatorioCCIH.aspx" title="Relatório de Pacientes Isolados" />
+      <siteMapNode url="~/Relatorio/GraficoRelatorio.aspx" title="Tendências_Gerais" />
+      <siteMapNode url="~/Relatorio/GraficoRelatorio_2.aspx" title="GrupoSitio_X_Microrganismos" />
+      <siteMapNode url="~/Relatorio/Graficos_3.aspx" title="GrupoSitio_X_Micr_Mes" />
+    </siteMapNode>
+    <siteMapNode url="" title="Pesquisa" roles="*">
+      <siteMapNode url="~/Internacao/Pesquisa.aspx" title="Pesquisa por RH" />
+    </siteMapNode>
+ 
+
+  
+  <siteMapNode url="" title="Administração" roles="Administrador">
+    <siteMapNode url="~/Administracao/cadUser.aspx" title="Cadastro Usuário" />
+    <siteMapNode url="~/Administracao/Perfil.aspx" title="Perfil de Usuário" />
+    <siteMapNode url="~/Administracao/deleteLogin.aspx" title="Excluir Usuário" />
+    <siteMapNode url="~/Administracao/Nova_Senha.aspx" title="Nova Senha" />
+  </siteMapNode>
+  </siteMapNode>
+
+ 
+</siteMap>

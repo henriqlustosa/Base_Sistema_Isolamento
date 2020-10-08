@@ -1,0 +1,49 @@
+﻿<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ Master Language="C#" %>
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+
+<head id="Head1" runat="server">
+<meta http-equiv="Content-Language" content="pt-br" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>HSPM - Login</title>
+<asp:ContentPlaceHolder id="head" runat="server">
+</asp:ContentPlaceHolder>
+<style type="text/css">
+</style>
+<link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+</head>
+
+<body>
+
+
+<form id="form1" runat="server">
+	<div id="content1">		
+	<div id="content2" style="text-align: center">
+		
+		    <div style="float: left; padding-right: 10px; padding-left: 10px;">
+				<img alt="Logo HSPM" src="images/logo_hspm.jpg" width="91" height="47" />
+				</div>
+		<span class="titulo">HOSPITAL DO SERVIDOR PÚBLICO MUNICIPAL</span>
+        <br />
+        <br />
+        
+        <h3>
+           <span style="font-family: Verdana">Sistema Isolamento</span></h3>
+        
+            <br />
+     
+		<br />
+		<br />
+		<br />
+<br/>
+</div>
+	</div>
+	<asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+	
+	</asp:ContentPlaceHolder>
+	
+</form>
+
+</body>
+
+</html>
