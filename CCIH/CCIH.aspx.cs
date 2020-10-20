@@ -20,16 +20,8 @@ public partial class CCIH : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        DataTable dt = new DataTable();
-        
-
-
-     
-
         if (!IsPostBack)
         {
-           
-            Censo details = new Censo();
             try
             {
                 string URI = "http://intranethspm:5003/hspmsgh-api/censo/";
@@ -47,12 +39,12 @@ public partial class CCIH : System.Web.UI.Page
 
                     var objText = reader.ReadToEnd();
 
-                    details = JsonConvert.DeserializeObject<Censo>(objText);
+                    var details = JsonConvert.DeserializeObject<List<Censo>>(objText);
+
+
                     GridInternado.DataSource = details; // apresentação dos dados da lista
                     GridInternado.DataBind();
                 }
-
-
 
 
             }
@@ -61,21 +53,7 @@ public partial class CCIH : System.Web.UI.Page
             {
                 string err = ex.Message;
             }
-
-
-
-
-
-
-
-
-
-
-
-
         }
-          
-        
     }
 
     protected void btnExportar_Click(object sender, EventArgs e)
@@ -115,7 +93,7 @@ public partial class CCIH : System.Web.UI.Page
 
     public class Censo
     {
-       
+
 
         public string cd_prontuario { get; set; }
 
@@ -146,11 +124,9 @@ public partial class CCIH : System.Web.UI.Page
         
 
 
-       /* internal static IEnumerable<PropertyInfo> GetProperties()
-        {
-            throw new NotImplementedException();
-        }*/
     }
+  
+  
   
 
 }
