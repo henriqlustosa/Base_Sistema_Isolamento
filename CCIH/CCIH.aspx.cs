@@ -24,6 +24,8 @@ public partial class CCIH : System.Web.UI.Page
         {
             try
             {
+                DateTime now = DateTime.Now;
+                lbDataHora.Text = now.ToString();
                 string URI = "http://intranethspm:5003/hspmsgh-api/censo/";
                 WebRequest request = WebRequest.Create(URI);
 
