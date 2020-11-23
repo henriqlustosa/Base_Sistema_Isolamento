@@ -64,7 +64,19 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                 }
                 else
                 {
-                    using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString()))
+                    // Consultar os endereços das API's para procurar dados de um paciente específico
+                    // Endereços:
+                    
+                    // - http://intranethspm:5003/hspmsgh-api/paciente/11036480 - consulta de um paciente no censo hospitalar. 
+                    // Parâmetro: RH do paciente
+
+                    // - http://intranethspm:5003/hspmsgh-api/internacoes/11036480 - consulta de um paciente na view de Internacao. 
+                    // Parâmetro: RH do paciente
+
+                    // - http://intranethspm:5003/hspmsgh-api/pacientes/paciente/11209913   - consulta de um paciente na view cadastro de Paciente. 
+                    // Parâmetro: RH do paciente
+
+                    using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString())) // Usar as views da API no lugar da consulta que era realizada no Hospub.
                     {
                         OdbcCommand cmm = cnn.CreateCommand();
                         cmm.CommandText = "select ib6regist, concat(ib6pnome,ib6compos) as nome , ib6dtnasc,ib6sexo from intb6  where ib6regist =" + rh;
@@ -77,6 +89,8 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                             dr1.Close();
 
                         }
+
+                        // Se não existir o paciente procurado, inserir os dados do paciente na base de dados do Sistema Isolamento 
                         else
                         {
                             string rh2 = dr1.GetDecimal(0).ToString();
@@ -92,6 +106,7 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                                 SqlDataReader dr2 = cmm2.ExecuteReader();
                                 if (!dr2.Read())
                                 {
+                                    // Inserção de um novo paciente na base de dados do Sistema de Isolamento
                                     dr2.Close();
                                     using (SqlConnection cnn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
                                     {
@@ -128,7 +143,7 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                     }//using
 
 
-
+                    // Inserção dos dados do Sistema Isolamento relacionados ao cadastro do Laboratorio.
 
 
                     using (SqlConnection cnn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
@@ -164,8 +179,10 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
         }//else do required control
     }
+    //Pesquisar o nome do paciente utilizando como parâmetro o seu RH.
     protected void Pesquisar_Click(object sender, EventArgs e)
     {
+
        using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString()))
         {
             try
@@ -257,4 +274,22 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
         return dataBanco;
     }
+
+
+
+    // Objeto Cadastro de Paciente
+
+
+
+
+
+
+    // Objeto Internacao
+
+
+
+
+
+    //Objeto Censo Hospitalar
+
 }
