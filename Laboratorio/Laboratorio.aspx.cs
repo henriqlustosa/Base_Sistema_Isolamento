@@ -278,7 +278,64 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
 
     // Objeto Cadastro de Paciente
-
+    public class Paciente
+    {
+        public string cd_prontuario { get; set; }
+        public string nm_situacao { get; set; }
+        public string nm_nome { get; set; }
+        public string nm_nome_social { get; set; }
+        public string nm_vinculo { get; set; }
+        public string nm_orgao { get; set; }
+        public string cd_rf_matricula{ get; set; }
+        public string in_sexo { get; set; }
+        public string dc_cor { get; set; }
+        public string dc_estado_civil { get; set; }
+        public string cd_mae { get; set; }
+        public string nm_mae { get; set; }
+        public string nm_pai { get; set; }
+        public string dt_data_nascimento { get; set; }
+        public string nr_idade { get; set; }
+        public string nm_nacionalidade { get; set; }
+        public string nm_naturalidade { get; set; }
+        public string sg_uf { get; set; }
+        public string dc_grau_instrucao { get; set; }
+        public string dc_ocupacao { get; set; }
+        public string nr_ddd_fone { get; set; }
+        public string nr_fone { get; set; }
+        public string nr_ddd_fone_recado { get; set; }
+        public string nr_fone_recado { get; set; }
+        public string cd_cep { get; set; }
+        public string dc_logradouro { get; set; }
+        public string nr_logradouro { get; set; }
+        public string dc_complemento_logradouro { get; set; }
+        public string dc_bairro { get; set; }
+        public string cd_ibge_cidade { get; set; }
+        public string sg_uf_endereco { get; set; }
+        public string tp_enderec { get; set; }
+        public string in_correspondencia { get; set; }
+        public string nr_rg { get; set; }
+        public string dc_orgao_emissor { get; set; }
+        public string sg_uf_sigla_emitiu_docto { get; set; }
+        public string dt_emissao_documento { get; set; }
+        public string nr_cpf { get; set; }
+        public string nr_pis { get; set; }
+        public string in_documentos_apresntados { get; set; }
+        public string nm_certidao { get; set; }
+        public string nm_cartorio { get; set; }
+        public string nr_livro { get; set; }
+        public string nr_folhas { get; set; }
+        public string nr_termo { get; set; }
+        public string dt_emissao { get; set; }
+        public string nr_declaracao_nascido { get; set; }
+        public string nr_cartao_saude { get; set; }
+        public string nm_motivo_cadastro { get; set; }
+        public string dc_documento_referencia { get; set; }
+        public string nr_cartao_nacional_saude_mae { get; set; }
+        public string dt_entrada_br { get; set; }
+        public string dt_naturalizacao { get; set; }
+        public string nr_portaria { get; set; }
+        public string dc_observacao { get; set; }
+}
 
 
 
@@ -286,10 +343,76 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
     // Objeto Internacao
 
-
+    public class Internacao
+    {
+        public string cd_prontuario { get; set; }
+        public string nm_paciente { get; set; }
+        public string in_sexo { get; set; }
+        public string nr_idade { get; set; }
+        public string nr_quarto { get; set; }
+        public string nr_leito { get; set; }
+        public string nm_ala { get; set; }
+        public string nm_clinica { get; set; }
+        public string nm_unidade_funcional { get; set; }
+        public string nm_acomodacao { get; set; }
+        public string st_leito { get; set; }
+        public string dt_internacao { get; set; }
+        public string dt_entrada_setor { get; set; }
+        public string nm_especialidade { get; set; }
+        public string nm_medico { get; set; }
+        public string dt_ultimo_evento { get; set; }
+        public string nm_origem { get; set; }
+        public string sg_cid { get; set; }
+        public string tx_observacao { get; set; }
+        public string nr_convenio { get; set; }
+        public string nr_plano { get; set; }
+        public string nm_convenio_plano { get; set; }
+        public string nr_crm_profissional { get; set; }
+        public string nm_carater_internacao { get; set; }
+        public string nm_origem_internacao { get; set; }
+        public string nr_procedimento { get; set; }
+        public string dt_alta_medica { get; set; }
+        public string dt_saida_paciente { get; set; }
+        public string dc_tipo_alta_medica { get; set; }
+    }
 
 
 
     //Objeto Censo Hospitalar
+
+    public class Censo
+    {
+
+
+        public string cd_prontuario { get; set; }
+
+        public string nm_paciente { get; set; }
+
+        public string dt_nascimento { get; set; }
+        public string nr_quarto { get; set; }
+
+        public string dt_internacao_data { get; set; }
+
+        public string dt_internacao_hora { get; set; }
+        public string nm_clinica { get; set; }
+
+        public string in_sexo { get; set; }
+
+        public string nr_idade { get; set; }
+
+
+        public string cod_CID { get; set; }
+
+        public string descricaoCID { get; set; }
+
+        public string nm_unidade_funcional { get; set; }
+        public string tempo { get; set; }
+
+        public string vinculo { get; set; }
+
+
+
+
+    }
 
 }
