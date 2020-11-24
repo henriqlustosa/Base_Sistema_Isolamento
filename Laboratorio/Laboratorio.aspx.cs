@@ -8,6 +8,11 @@ using System.Data.Odbc;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections;
+using System.Net;
+using Newtonsoft.Json;
+using System.Reflection;
+using System.IO;
 
 public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 {
@@ -66,7 +71,7 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                 {
                     // Consultar os endereços das API's para procurar dados de um paciente específico
                     // Endereços:
-                    
+
                     // - http://intranethspm:5003/hspmsgh-api/paciente/11036480 - consulta de um paciente no censo hospitalar. 
                     // Parâmetro: RH do paciente
 
@@ -75,7 +80,40 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
                     // - http://intranethspm:5003/hspmsgh-api/pacientes/paciente/11209913   - consulta de um paciente na view cadastro de Paciente. 
                     // Parâmetro: RH do paciente
+                    try
+                    {
+                       // Buscar data e hora atual do sistema:
+                       // DateTime now = DateTime.Now;
+                       // lbDataHora.Text = now.ToString();
+                        string URI = "http://intranethspm:5003/hspmsgh-api/paciente/2833747";
+                        WebRequest request = WebRequest.Create(URI);
 
+                        HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
+                        // Sends the HttpWebRequest and waits for a response.
+                        HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+                        if (httpResponse.StatusCode == HttpStatusCode.OK)
+                        {
+                            var reader = new StreamReader(httpResponse.GetResponseStream());
+
+                            JsonSerializer json = new JsonSerializer();
+
+                            var objText = reader.ReadToEnd();
+
+                            var details = JsonConvert.DeserializeObject<Censo>(objText);
+                           
+
+                           // GridInternado.DataSource = details; // apresentação dos dados da lista
+                          //  GridInternado.DataBind();
+                        }
+
+
+                    }
+
+                    catch (WebException ex)
+                    {
+                        string err = ex.Message;
+                    }
                     using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString())) // Usar as views da API no lugar da consulta que era realizada no Hospub.
                     {
                         OdbcCommand cmm = cnn.CreateCommand();
@@ -183,10 +221,11 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
     protected void Pesquisar_Click(object sender, EventArgs e)
     {
 
-       using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString()))
-        {
+       //using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString()))
+       // {
             try
             {
+                /*
                 OdbcCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "Select  concat(ib6pnome,ib6compos) from intb6 where ib6regist = " + txbRH.Text;
                 cnn.Open();
@@ -226,14 +265,63 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                     lbClinicaPreenchido.Text = "Paciente não está internado";
 
 
+                } */
+
+                string URI = "http://intranethspm:5003/hspmsgh-api/paciente/" + txbRH.Text; 
+                WebRequest request = WebRequest.Create(URI);
+
+                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
+                // Sends the HttpWebRequest and waits for a response.
+                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var reader = new StreamReader(httpResponse.GetResponseStream());
+
+                    JsonSerializer json = new JsonSerializer();
+
+                    var objText = reader.ReadToEnd();
+
+                    var details = JsonConvert.DeserializeObject<Censo>(objText);
+                    lbNomePreenchido.Text = details.nm_paciente;
+                    lbClinicaPreenchido.Text = details.nm_clinica;
+
+                    // GridInternado.DataSource = details; // apresentação dos dados da lista
+                    //  GridInternado.DataBind();
                 }
+                else
+                {
+                    string URI_2 = "http://intranethspm:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
+                    WebRequest request_2 = WebRequest.Create(URI_2);
+
+                    HttpWebRequest httpRequest_2 = (HttpWebRequest)WebRequest.Create(URI_2);
+                    // Sends the HttpWebRequest and waits for a response.
+                    HttpWebResponse httpResponse_2 = (HttpWebResponse)httpRequest_2.GetResponse();
+
+                    if (httpResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        var reader_2 = new StreamReader(httpResponse_2.GetResponseStream());
+
+                        JsonSerializer json_2 = new JsonSerializer();
+
+                        var objText_2 = reader_2.ReadToEnd();
+
+                        var details_2 = JsonConvert.DeserializeObject<Paciente_Cadastro>(objText_2);
+                        lbNomePreenchido.Text = details_2.nm_nome;
+                        lbClinicaPreenchido.Text = "Paciente não está internado";
+
+                        // GridInternado.DataSource = details; // apresentação dos dados da lista
+                        //  GridInternado.DataBind();
+                    }
+                }
+
             }
 
             catch (Exception ex)
             {
                 String erro = ex.Message;
             }
-        }
+       // }
    
     }
     public void LimpaCampos()
@@ -278,7 +366,7 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
 
     // Objeto Cadastro de Paciente
-    public class Paciente
+    public class Paciente_Cadastro
     {
         public string cd_prontuario { get; set; }
         public string nm_situacao { get; set; }
