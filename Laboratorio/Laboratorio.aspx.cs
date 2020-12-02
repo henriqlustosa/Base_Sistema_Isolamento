@@ -221,110 +221,165 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
     protected void Pesquisar_Click(object sender, EventArgs e)
     {
 
-       //using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString()))
-       // {
-            try
-            {
-                /*
-                OdbcCommand cmm = cnn.CreateCommand();
-                cmm.CommandText = "Select  concat(ib6pnome,ib6compos) from intb6 where ib6regist = " + txbRH.Text;
-                cnn.Open();
-                OdbcDataReader dr = cmm.ExecuteReader();
+        //using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString()))
+        // {
+        //try
+        // {           // {
+        /*
+        OdbcCommand cmm = cnn.CreateCommand();
+        cmm.CommandText = "Select  concat(ib6pnome,ib6compos) from intb6 where ib6regist = " + txbRH.Text;
+        cnn.Open();
+        OdbcDataReader dr = cmm.ExecuteReader();
 
-                if (dr.Read())
+        if (dr.Read())
+        {
+            lbNomePreenchido.Text = dr.GetString(0);
+            dr.Close();
+        }
+
+
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Número de RH não existe!');", true);
+            dr.Close();
+
+
+            LimpaCampos();
+
+        }
+
+        OdbcCommand cmm1 = cnn.CreateCommand();
+        cmm1.CommandText = "select c14nomec from cen02 ,cen14, intb6 where i02pront = ib6regist and c14codclin = c02codclin and ib6regist =" + txbRH.Text;
+
+        OdbcDataReader dr1 = cmm1.ExecuteReader();
+
+        if (dr1.Read())
+        {
+            lbClinicaPreenchido.Text = dr1.GetString(0);
+
+        }
+
+
+        else
+        {
+            lbClinicaPreenchido.Text = "Paciente não está internado";
+
+
+        } */
+
+        lbClinicaPreenchido.Text = "Paciente não está internado";
+
+
+
+        try
+        { 
+
+            
+            
+              //  string URI_2 = "http://intranethspm:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
+            string URI_2 = "http://localhost:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
+            //WebRequest request_2 = WebRequest.Create(URI_2);
+
+            HttpWebRequest httpRequest_2 = (HttpWebRequest)WebRequest.Create(URI_2);
+                // Sends the HttpWebRequest and waits for a response.
+                HttpWebResponse httpResponse_2 = (HttpWebResponse)httpRequest_2.GetResponse();
+
+                if (httpResponse_2.StatusCode == HttpStatusCode.OK)
                 {
-                    lbNomePreenchido.Text = dr.GetString(0);
-                    dr.Close();
+                    var reader_2 = new StreamReader(httpResponse_2.GetResponseStream());
+
+                    JsonSerializer json_2 = new JsonSerializer();
+
+                    var objText_2 = reader_2.ReadToEnd();
+
+                    var details_2 = JsonConvert.DeserializeObject<Paciente_Cadastro>(objText_2);
+                // Se o nome do Paciente for igual a null, então apresentar a mensagem de RH inválido
+
+                    
+
+                if(details_2.nm_nome != null)
+                {
+                    lbNomePreenchido.Text = details_2.nm_nome;
+
                 }
 
 
-                else
+                    else
                 {
                     ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Número de RH não existe!');", true);
-                    dr.Close();
+                   
 
 
                     LimpaCampos();
 
                 }
-             
-                OdbcCommand cmm1 = cnn.CreateCommand();
-                cmm1.CommandText = "select c14nomec from cen02 ,cen14, intb6 where i02pront = ib6regist and c14codclin = c02codclin and ib6regist =" + txbRH.Text;
-             
-                OdbcDataReader dr1 = cmm1.ExecuteReader();
 
-                if (dr1.Read())
+
+                // GridInternado.DataSource = details; // apresentação dos dados da lista
+                //  GridInternado.DataBind();
+            }
+            
+
+        
+        }
+
+        catch(WebException ex)
+        {
+            string err = ex.Message;
+
+            //  if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
+
+
+        }
+
+        try
+        {
+
+            //string URI = "http://intranethspm:5003/hspmsgh-api/paciente/" + txbRH.Text;
+            string URI = "http://localhost:5003/hspmsgh-api/paciente/" + txbRH.Text;
+            WebRequest request = WebRequest.Create(URI);
+
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
+            HttpWebResponse httpResponse = null;
+            // Sends the HttpWebRequest and waits for a response.
+            httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+            if (httpResponse.StatusCode == HttpStatusCode.OK)
+            {
+                var reader = new StreamReader(httpResponse.GetResponseStream());
+
+                JsonSerializer json = new JsonSerializer();
+
+                var objText = reader.ReadToEnd();
+
+                var details = JsonConvert.DeserializeObject<Censo>(objText);
+
+                // Se o nome da Clínica for igual a Null não preencher o label da Clinica.
+            
+                if (details.nm_clinica != null)
                 {
-                    lbClinicaPreenchido.Text = dr1.GetString(0);
 
-                }
-
-
-                else
-                {
-                    lbClinicaPreenchido.Text = "Paciente não está internado";
-
-
-                } */
-
-                string URI = "http://intranethspm:5003/hspmsgh-api/paciente/" + txbRH.Text; 
-                WebRequest request = WebRequest.Create(URI);
-
-                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
-                // Sends the HttpWebRequest and waits for a response.
-                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-
-                if (httpResponse.StatusCode == HttpStatusCode.OK)
-                {
-                    var reader = new StreamReader(httpResponse.GetResponseStream());
-
-                    JsonSerializer json = new JsonSerializer();
-
-                    var objText = reader.ReadToEnd();
-
-                    var details = JsonConvert.DeserializeObject<Censo>(objText);
-                    lbNomePreenchido.Text = details.nm_paciente;
                     lbClinicaPreenchido.Text = details.nm_clinica;
 
-                    // GridInternado.DataSource = details; // apresentação dos dados da lista
-                    //  GridInternado.DataBind();
-                }
-                else
-                {
-                    string URI_2 = "http://intranethspm:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
-                    WebRequest request_2 = WebRequest.Create(URI_2);
-
-                    HttpWebRequest httpRequest_2 = (HttpWebRequest)WebRequest.Create(URI_2);
-                    // Sends the HttpWebRequest and waits for a response.
-                    HttpWebResponse httpResponse_2 = (HttpWebResponse)httpRequest_2.GetResponse();
-
-                    if (httpResponse.StatusCode == HttpStatusCode.OK)
-                    {
-                        var reader_2 = new StreamReader(httpResponse_2.GetResponseStream());
-
-                        JsonSerializer json_2 = new JsonSerializer();
-
-                        var objText_2 = reader_2.ReadToEnd();
-
-                        var details_2 = JsonConvert.DeserializeObject<Paciente_Cadastro>(objText_2);
-                        lbNomePreenchido.Text = details_2.nm_nome;
-                        lbClinicaPreenchido.Text = "Paciente não está internado";
-
-                        // GridInternado.DataSource = details; // apresentação dos dados da lista
-                        //  GridInternado.DataBind();
-                    }
                 }
 
+                // GridInternado.DataSource = details; // apresentação dos dados da lista
+                //  GridInternado.DataBind();
             }
+        }
 
-            catch (Exception ex)
-            {
-                String erro = ex.Message;
-            }
-       // }
-   
+        catch (WebException ex)
+        {
+            string err = ex.Message;
+
+            //  if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
+
+
+        }
+
+
     }
-    public void LimpaCampos()
+public void LimpaCampos()
     {
         lbNomePreenchido.Text = "";
         lbClinicaPreenchido.Text = "";
