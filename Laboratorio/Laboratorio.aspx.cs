@@ -49,11 +49,12 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
             DateTime dt_ultima_atualizacao = DateTime.Now;
             string usuario = lbUser.Text;
 
-            //tabela paciente
+            //tabela paciente do SGH
             string nomePaciente = lbNomePreenchido.Text;
             string dt_nascimento = "";
-            char sexo;
+            string sexo = "";
 
+            
             //insert paciente
             using (SqlConnection cnn4 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
             {
@@ -85,7 +86,7 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                        // Buscar data e hora atual do sistema:
                        // DateTime now = DateTime.Now;
                        // lbDataHora.Text = now.ToString();
-                        string URI = "http://intranethspm:5003/hspmsgh-api/paciente/2833747";
+                        string URI = "http://intranethspm:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
                         WebRequest request = WebRequest.Create(URI);
 
                         HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
@@ -100,11 +101,16 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
                             var objText = reader.ReadToEnd();
 
-                            var details = JsonConvert.DeserializeObject<Censo>(objText);
-                           
+                            var details = JsonConvert.DeserializeObject<Paciente_Cadastro>(objText);
 
-                           // GridInternado.DataSource = details; // apresentação dos dados da lista
-                          //  GridInternado.DataBind();
+                       
+                            dt_nascimento = details.dt_data_nascimento;
+
+                            sexo = details.in_sexo;
+                          
+
+                            // GridInternado.DataSource = details; // apresentação dos dados da lista
+                            //  GridInternado.DataBind();
                         }
 
 
@@ -114,32 +120,32 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                     {
                         string err = ex.Message;
                     }
-                    using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString())) // Usar as views da API no lugar da consulta que era realizada no Hospub.
-                    {
-                        OdbcCommand cmm = cnn.CreateCommand();
-                        cmm.CommandText = "select ib6regist, concat(ib6pnome,ib6compos) as nome , ib6dtnasc,ib6sexo from intb6  where ib6regist =" + rh;
-                        cnn.Open();
-                        OdbcDataReader dr1 = cmm.ExecuteReader();
+                    //using (OdbcConnection cnn = new OdbcConnection(ConfigurationManager.ConnectionStrings["HospubConn"].ToString())) // Usar as views da API no lugar da consulta que era realizada no Hospub.
+                    //{
+                    //    OdbcCommand cmm = cnn.CreateCommand();
+                    //    cmm.CommandText = "select ib6regist, concat(ib6pnome,ib6compos) as nome , ib6dtnasc,ib6sexo from intb6  where ib6regist =" + rh;
+                    //    cnn.Open();
+                    //    OdbcDataReader dr1 = cmm.ExecuteReader();
 
-                        if (!dr1.Read())
-                        {
-                            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Número de RH não existe" + rh + "!);", true);
-                            dr1.Close();
+                    //    if (!dr1.Read())
+                    //    {
+                    //        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Número de RH não existe" + rh + "!);", true);
+                    //        dr1.Close();
 
-                        }
+                    //    }
 
-                        // Se não existir o paciente procurado, inserir os dados do paciente na base de dados do Sistema Isolamento 
-                        else
-                        {
-                            string rh2 = dr1.GetDecimal(0).ToString();
-                            string nomeCompleto = dr1.GetString(1);
-                            dt_nascimento = dr1.GetString(2);
-                            sexo = dr1.GetChar(3);
+                    //    // Se não existir o paciente procurado, inserir os dados do paciente na base de dados do Sistema Isolamento 
+                    //    else
+                    //    {
+                    //        string rh2 = dr1.GetDecimal(0).ToString();
+                    //        string nomeCompleto = dr1.GetString(1);
+                    //        dt_nascimento = dr1.GetString(2);
+                    //        sexo = dr1.GetString(3);
                             using (SqlConnection cnn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
                             {
 
                                 SqlCommand cmm2 = cnn2.CreateCommand();
-                                cmm2.CommandText = "SELECT rh FROM Paciente WHERE rh = " + rh2;
+                                cmm2.CommandText = "SELECT rh FROM Paciente WHERE rh = " + rh;
                                 cnn2.Open();
                                 SqlDataReader dr2 = cmm2.ExecuteReader();
                                 if (!dr2.Read())
@@ -151,8 +157,8 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                                         SqlCommand cmm1 = cnn1.CreateCommand();
                                         cmm1.CommandText = "INSERT INTO Paciente (rh, nome, dt_nasc, sexo, obito) VALUES (@rh,@nome,@dt_nascimento, @sexo,@obito)";
 
-                                        cmm1.Parameters.Add("@rh", SqlDbType.VarChar).Value = rh2;
-                                        cmm1.Parameters.Add("@nome", SqlDbType.VarChar).Value = nomeCompleto;
+                                        cmm1.Parameters.Add("@rh", SqlDbType.VarChar).Value = rh;
+                                        cmm1.Parameters.Add("@nome", SqlDbType.VarChar).Value = nomePaciente;
                                         cmm1.Parameters.Add("@dt_nascimento", SqlDbType.Date).Value = converterData(dt_nascimento);
                                         cmm1.Parameters.Add("@sexo", SqlDbType.Char).Value = sexo;
                                         cmm1.Parameters.Add("@obito", SqlDbType.Bit).Value = false;
@@ -176,13 +182,26 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
                             }//using
 
 
-                        }//else
+                       // }//else
 
-                    }//using
+                   // }//using
+
+                    //---------------------------------------------------------Finalizar ate aqui o cadastro do Paciente com suas validacoes no Sistema Isolamento--------------------------------------------------------------------------------------------------------------------------------///
+                    
 
 
-                    // Inserção dos dados do Sistema Isolamento relacionados ao cadastro do Laboratorio.
 
+
+
+
+
+
+
+
+
+                    // Inserção dos dados do Sistema Isolamento relacionados ao cadastro do Laboratorio. Verificar a tabela Clinica para fazer um depara com a do SGH
+
+                    
 
                     using (SqlConnection cnn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
                     {
@@ -276,8 +295,8 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
             
             
-              //  string URI_2 = "http://intranethspm:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
-            string URI_2 = "http://localhost:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
+               string URI_2 = "http://intranethspm:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
+            //string URI_2 = "http://localhost:5003/hspmsgh-api/pacientes/paciente/" + txbRH.Text;
             //WebRequest request_2 = WebRequest.Create(URI_2);
 
             HttpWebRequest httpRequest_2 = (HttpWebRequest)WebRequest.Create(URI_2);
@@ -335,8 +354,8 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
         try
         {
 
-            //string URI = "http://intranethspm:5003/hspmsgh-api/paciente/" + txbRH.Text;
-            string URI = "http://localhost:5003/hspmsgh-api/paciente/" + txbRH.Text;
+            string URI = "http://intranethspm:5003/hspmsgh-api/paciente/" + txbRH.Text;
+           // string URI = "http://localhost:5003/hspmsgh-api/paciente/" + txbRH.Text;
             WebRequest request = WebRequest.Create(URI);
 
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
@@ -398,9 +417,9 @@ public void LimpaCampos()
     }
     public string converterData(string data)
     {
-        string ano = data.Substring(0, 4);
-        string mes = data.Substring(4, 2);
-        string dia = data.Substring(6, 2);
+        string ano = data.Substring(6, 4);
+        string mes = data.Substring(3, 2);
+        string dia = data.Substring(0, 2);
         string dataBanco = ano + "-" + mes + "-" + dia;
 
 
@@ -424,6 +443,7 @@ public void LimpaCampos()
     public class Paciente_Cadastro
     {
         public string cd_prontuario { get; set; }
+        public string cd_codigo { get; set; }
         public string nm_situacao { get; set; }
         public string nm_nome { get; set; }
         public string nm_nome_social { get; set; }
@@ -478,7 +498,17 @@ public void LimpaCampos()
         public string dt_naturalizacao { get; set; }
         public string nr_portaria { get; set; }
         public string dc_observacao { get; set; }
-}
+        public string situacao_vinculo { get; set; }
+        public string causa_termino { get; set; }
+        public string validade_termino { get; set; }
+        public string grau_dep_vinculo { get; set; }
+        public string nome_titular { get; set; }
+        public string ddd_fone_comercial { get; set; }
+
+        public string fone_comercial { get; set; }
+        public string email{ get; set; }
+
+    }
 
 
 
