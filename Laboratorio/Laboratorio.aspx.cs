@@ -504,7 +504,6 @@ public void LimpaCampos()
         public string grau_dep_vinculo { get; set; }
         public string nome_titular { get; set; }
         public string ddd_fone_comercial { get; set; }
-
         public string fone_comercial { get; set; }
         public string email{ get; set; }
 
