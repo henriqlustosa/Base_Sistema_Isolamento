@@ -24,10 +24,12 @@ public partial class CCIH : System.Web.UI.Page
         {
             try
             {
+                String cd_prontuario = "";
                 DateTime now = DateTime.Now;
                 lbDataHora.Text = now.ToString();
                 string URI = "http://intranethspm:5003/hspmsgh-api/censo/";
                 WebRequest request = WebRequest.Create(URI);
+                List<Censo> final = new List<Censo>();
 
                 HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(URI);
                 // Sends the HttpWebRequest and waits for a response.
@@ -43,8 +45,33 @@ public partial class CCIH : System.Web.UI.Page
 
                     var details = JsonConvert.DeserializeObject<List<Censo>>(objText);
 
+                    foreach (Censo detail in details)
+                    {
+                        cd_prontuario = detail.cd_prontuario;
 
-                    GridInternado.DataSource = details; // apresentação dos dados da lista
+                        // Buscar na Base de Dados do Sistema Isolado se o paciente que se encontra no censo hospitalar já foi alguma vez positivado com MDR 
+                        using (SqlConnection cnn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
+                        {
+
+                            SqlCommand cmm2 = cnn2.CreateCommand();
+                            cmm2.CommandText = "SELECT rh FROM Paciente WHERE rh = " + cd_prontuario;
+                            cnn2.Open();
+                            SqlDataReader dr2 = cmm2.ExecuteReader();
+                            if (dr2.Read())
+                            {
+
+
+                                final.Add(detail);
+
+                            }//if
+
+
+                        }//using
+
+                    }
+          
+
+                    GridInternado.DataSource = final; // apresentação dos dados da lista
                     GridInternado.DataBind();
                 }
 
