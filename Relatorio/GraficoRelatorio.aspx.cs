@@ -77,9 +77,9 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
                 SqlCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "SELECT sexo,count(*) as Total " +
-"FROM( select distinct  e.rh ,sexo from [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
-"where (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial +
-          " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p GROUP BY p.sexo";
+                "FROM( select distinct  e.rh ,sexo from [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
+                "where (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial +
+                " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p GROUP BY p.sexo";
 
                 cnn.Open();
                 SqlDataReader dr = cmm.ExecuteReader();
@@ -119,19 +119,19 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
                 SqlCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "SELECT  SUM(CASE WHEN idade < 5 THEN 1 ELSE 0 END) AS [0-4]," +
-        "SUM(CASE WHEN idade BETWEEN 5 AND 9 THEN 1 ELSE 0 END) AS [5-9], " +
-        "SUM(CASE WHEN idade BETWEEN 10 AND 19 THEN 1 ELSE 0 END) AS [10-19], " +
-        "SUM(CASE WHEN idade BETWEEN 20 AND 29 THEN 1 ELSE 0 END) AS [20-29], " +
-        "SUM(CASE WHEN idade BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS [30-39], " +
-        "SUM(CASE WHEN idade BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS [40-49], " +
-        "SUM(CASE WHEN idade BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS [50-59], " +
-        "SUM(CASE WHEN idade BETWEEN 60 AND 69 THEN 1 ELSE 0 END) AS [60-69], " +
-        "SUM(CASE WHEN idade BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS [70-79], " +
-        "SUM(CASE WHEN idade >79 THEN 1 ELSE 0 END) AS [80- +]  FROM (SELECT distinct e.[rh],[nome],convert ( int ,DATEDIFF(d, dt_nasc, getdate())/365.25) as idade,[sexo],[obito] " +
-      "FROM [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh  " +
- "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
+                "SUM(CASE WHEN idade BETWEEN 5 AND 9 THEN 1 ELSE 0 END) AS [5-9], " +
+                "SUM(CASE WHEN idade BETWEEN 10 AND 19 THEN 1 ELSE 0 END) AS [10-19], " +
+                "SUM(CASE WHEN idade BETWEEN 20 AND 29 THEN 1 ELSE 0 END) AS [20-29], " +
+                "SUM(CASE WHEN idade BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS [30-39], " +
+                "SUM(CASE WHEN idade BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS [40-49], " +
+                "SUM(CASE WHEN idade BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS [50-59], " +
+                "SUM(CASE WHEN idade BETWEEN 60 AND 69 THEN 1 ELSE 0 END) AS [60-69], " +
+                "SUM(CASE WHEN idade BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS [70-79], " +
+                "SUM(CASE WHEN idade >79 THEN 1 ELSE 0 END) AS [80- +]  FROM (SELECT distinct e.[rh],[nome],convert ( int ,DATEDIFF(d, dt_nasc, getdate())/365.25) as idade,[sexo],[obito] " +
+                "FROM [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh  " +
+                "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
                 "where obito = 0 AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >=  " + anoMesInicial +
-          "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal+" ) as p" ;
+                "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal+" ) as p" ;
 
 
 
@@ -170,19 +170,19 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
                 SqlCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "SELECT  SUM(CASE WHEN idade < 5 THEN 1 ELSE 0 END) AS [0-4]," +
-        "SUM(CASE WHEN idade BETWEEN 5 AND 9 THEN 1 ELSE 0 END) AS [5-9], " +
-        "SUM(CASE WHEN idade BETWEEN 10 AND 19 THEN 1 ELSE 0 END) AS [10-19], " +
-        "SUM(CASE WHEN idade BETWEEN 20 AND 29 THEN 1 ELSE 0 END) AS [20-29], " +
-        "SUM(CASE WHEN idade BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS [30-39], " +
-        "SUM(CASE WHEN idade BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS [40-49], " +
-        "SUM(CASE WHEN idade BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS [50-59], " +
-        "SUM(CASE WHEN idade BETWEEN 60 AND 69 THEN 1 ELSE 0 END) AS [60-69], " +
-        "SUM(CASE WHEN idade BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS [70-79], " +
-        "SUM(CASE WHEN idade >79 THEN 1 ELSE 0 END) AS [80- +]  FROM (SELECT distinct e.[rh],[nome],convert ( int ,DATEDIFF(d, dt_nasc, getdate())/365.25) as idade,[sexo],[obito] " +
-      "FROM [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh  " +
- "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
+                "SUM(CASE WHEN idade BETWEEN 5 AND 9 THEN 1 ELSE 0 END) AS [5-9], " +
+                "SUM(CASE WHEN idade BETWEEN 10 AND 19 THEN 1 ELSE 0 END) AS [10-19], " +
+                "SUM(CASE WHEN idade BETWEEN 20 AND 29 THEN 1 ELSE 0 END) AS [20-29], " +
+                "SUM(CASE WHEN idade BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS [30-39], " +
+                "SUM(CASE WHEN idade BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS [40-49], " +
+                "SUM(CASE WHEN idade BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS [50-59], " +
+                "SUM(CASE WHEN idade BETWEEN 60 AND 69 THEN 1 ELSE 0 END) AS [60-69], " +
+                "SUM(CASE WHEN idade BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS [70-79], " +
+                "SUM(CASE WHEN idade >79 THEN 1 ELSE 0 END) AS [80- +]  FROM (SELECT distinct e.[rh],[nome],convert ( int ,DATEDIFF(d, dt_nasc, getdate())/365.25) as idade,[sexo],[obito] " +
+                "FROM [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh  " +
+                "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
                 "where obito = 1 AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >=  " + anoMesInicial +
-          "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + " ) as p";
+                "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + " ) as p";
 
 
 
@@ -234,26 +234,26 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
                 SqlCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "SELECT  SUM(CASE WHEN idade < 5 THEN 1 ELSE 0 END) AS [0-4]," +
-        "SUM(CASE WHEN idade BETWEEN 5 AND 9 THEN 1 ELSE 0 END) AS [5-9], " +
-        "SUM(CASE WHEN idade BETWEEN 10 AND 19 THEN 1 ELSE 0 END) AS [10-19], " +
-        "SUM(CASE WHEN idade BETWEEN 20 AND 29 THEN 1 ELSE 0 END) AS [20-29], " +
-        "SUM(CASE WHEN idade BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS [30-39], " +
-        "SUM(CASE WHEN idade BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS [40-49], " +
-        "SUM(CASE WHEN idade BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS [50-59], " +
-        "SUM(CASE WHEN idade BETWEEN 60 AND 69 THEN 1 ELSE 0 END) AS [60-69], " +
-        "SUM(CASE WHEN idade BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS [70-79], " +
-        "SUM(CASE WHEN idade >79 THEN 1 ELSE 0 END) AS [80- +]  FROM (SELECT distinct e.[rh],[nome],convert ( int ,DATEDIFF(d, dt_nasc, getdate())/365.25) as idade,[sexo],[obito] " +
-      "FROM [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh  " +
- "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
+                "SUM(CASE WHEN idade BETWEEN 5 AND 9 THEN 1 ELSE 0 END) AS [5-9], " +
+                "SUM(CASE WHEN idade BETWEEN 10 AND 19 THEN 1 ELSE 0 END) AS [10-19], " +
+                "SUM(CASE WHEN idade BETWEEN 20 AND 29 THEN 1 ELSE 0 END) AS [20-29], " +
+                "SUM(CASE WHEN idade BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS [30-39], " +
+                "SUM(CASE WHEN idade BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS [40-49], " +
+                "SUM(CASE WHEN idade BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS [50-59], " +
+                "SUM(CASE WHEN idade BETWEEN 60 AND 69 THEN 1 ELSE 0 END) AS [60-69], " +
+                "SUM(CASE WHEN idade BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS [70-79], " +
+                "SUM(CASE WHEN idade >79 THEN 1 ELSE 0 END) AS [80- +]  FROM (SELECT distinct e.[rh],[nome],convert ( int ,DATEDIFF(d, dt_nasc, getdate())/365.25) as idade,[sexo],[obito] " +
+                "FROM [Isolamento].[dbo].[Paciente]as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh  " +
+                "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
                 "where obito = 0 AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >=  " + anoMesInicial +
-          "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal+
-  "Union " +
-  "SELECT distinct e.[rh],[nome],DATEDIFF(yy, dt_nasc, dtobito) as idade,[sexo],[obito] " +
-  "FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
- "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
-    "where obito =1 AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial  + 
-           "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal +
-           " ) as p ";
+                "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal+
+                "Union " +
+                "SELECT distinct e.[rh],[nome],DATEDIFF(yy, dt_nasc, dtobito) as idade,[sexo],[obito] " +
+                "FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
+                "inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
+                "where obito =1 AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial  + 
+                "AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal +
+                " ) as p ";
   
 
 
@@ -303,13 +303,13 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
                 SqlCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "SELECT     grupo,  ISNULL([0], 0) AS VIVO, ISNULL([1], 0) AS MORTO,(ISNULL([0], 0) + ISNULL([1], 0)) AS TOTAL FROM(" +
-"SELECT grupo,obito,COUNT (*) as Total FROM( SELECT distinct e.[rh],[nome],[sexo],[obito] as obito,m.descricao as microorganismo " +
- " ,g.descricao as grupo FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
-" inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
- " inner join [Isolamento].[dbo].[Material_Grupo_Materiais] as mg on e.material = mg.cod_material " +
- " inner join [Isolamento].[dbo].[Grupo_Materiais] as g on mg.cod_grupo_materiais = g.cod_grupo_materiais   WHERE (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial +
-          " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p " +
- " group by p.grupo , p.obito) as pr PIVOT (SUM(pr.Total) FOR pr.obito IN ([0], [1]) )as pvt ORDER BY pvt.grupo";
+                "SELECT grupo,obito,COUNT (*) as Total FROM( SELECT distinct e.[rh],[nome],[sexo],[obito] as obito,m.descricao as microorganismo " +
+                " ,g.descricao as grupo FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
+                " inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " +
+                " inner join [Isolamento].[dbo].[Material_Grupo_Materiais] as mg on e.material = mg.cod_material " +
+                " inner join [Isolamento].[dbo].[Grupo_Materiais] as g on mg.cod_grupo_materiais = g.cod_grupo_materiais   WHERE (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial +
+                " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p " +
+                " group by p.grupo , p.obito) as pr PIVOT (SUM(pr.Total) FOR pr.obito IN ([0], [1]) )as pvt ORDER BY pvt.grupo";
 
                 cnn.Open();
 
@@ -344,11 +344,11 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
               SqlCommand cmm = cnn.CreateCommand();
               cmm.CommandText = "SELECT     sexo,  ISNULL([0], 0) AS VIVO, ISNULL([1], 0) AS MORTO,(ISNULL([0], 0) + ISNULL([1], 0)) AS TOTAL FROM(" +
-" SELECT sexo,obito,COUNT (*) as Total FROM( SELECT distinct e.[rh],[nome],[sexo],[obito] as obito " +
- " FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh" +
-  " WHERE (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= "+ anoMesInicial +
-           " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p" +
- " group by p.sexo , p.obito) as pr PIVOT (SUM(pr.Total) FOR pr.obito IN ([0], [1]) )as pvt ORDER BY pvt.sexo";
+                " SELECT sexo,obito,COUNT (*) as Total FROM( SELECT distinct e.[rh],[nome],[sexo],[obito] as obito " +
+                " FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh" +
+                " WHERE (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= "+ anoMesInicial +
+                " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p" +
+                " group by p.sexo , p.obito) as pr PIVOT (SUM(pr.Total) FOR pr.obito IN ([0], [1]) )as pvt ORDER BY pvt.sexo";
 
               cnn.Open();
 
@@ -396,12 +396,12 @@ public partial class Relatorio_GraficoRelatorio : System.Web.UI.Page
 
                 SqlCommand cmm = cnn.CreateCommand();
                 cmm.CommandText = "SELECT     microorganismo,  ISNULL([0], 0) AS VIVO, ISNULL([1], 0) AS MORTO,(ISNULL([0], 0) + ISNULL([1], 0)) AS TOTAL FROM(" +
-"SELECT microorganismo,obito,COUNT (*) as Total FROM( SELECT distinct e.[rh],[nome],[sexo],[obito] as obito,m.descricao as microorganismo " +
- "  FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
-" inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " + 
- "   WHERE (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial +
-          " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p " +
- " group by p.microorganismo , p.obito) as pr PIVOT (SUM(pr.Total) FOR pr.obito IN ([0], [1]) )as pvt ORDER BY pvt.microorganismo";
+             "SELECT microorganismo,obito,COUNT (*) as Total FROM( SELECT distinct e.[rh],[nome],[sexo],[obito] as obito,m.descricao as microorganismo " +
+             "  FROM [Isolamento].[dbo].[Paciente] as p inner join [Isolamento].[dbo].[Exame] as e on e.rh = p.rh " +
+            " inner join [Isolamento].[dbo].[tipos_microorganismos] as m on e.microorganismo = m.cod_microorg " + 
+            "   WHERE (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) >= " + anoMesInicial +
+            " AND (YEAR(e.dt_resultado) * 100 + MONTH(e.dt_resultado)) <= " + anoMesFinal + ") as p " +
+            " group by p.microorganismo , p.obito) as pr PIVOT (SUM(pr.Total) FOR pr.obito IN ([0], [1]) )as pvt ORDER BY pvt.microorganismo";
 
                 cnn.Open();
 

@@ -67,6 +67,9 @@
                       onclick="Pesquisar_Click" />
               
             </td>
+            <td>
+                <asp:Button ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" Width="64px" />
+            </td>
             
             
         </tr>

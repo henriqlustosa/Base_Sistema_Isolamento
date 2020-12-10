@@ -59,7 +59,7 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
             using (SqlConnection cnn4 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
             {
                 SqlCommand cmm4 = cnn4.CreateCommand();
-                cmm4.CommandText = "SELECT * FROM [Isolamento].[dbo].[Exame] WHERE  microorganismo = " + codMicroorg + "and material = " + codMaterial + "and rh =" + rh + " and dt_resultado = '" + converterData2(data_resultado_exame) + "'";
+                cmm4.CommandText = "SELECT * FROM [Isolamento].[dbo].[Exame] WHERE  microorganismo = " + codMicroorg + " and material = " + codMaterial + " and rh =" + rh + " and dt_resultado = '" + converterData2(data_resultado_exame) + "'";
                 cnn4.Open();
                 SqlDataReader dr4 = cmm4.ExecuteReader();
                 if (dr4.Read())
@@ -105,8 +105,11 @@ public partial class Laboratorio_Laboratorio : System.Web.UI.Page
 
                        
                             dt_nascimento = details.dt_data_nascimento;
-
+                            sexo = "3";
                             sexo = details.in_sexo;
+                           
+                            if (sexo.Equals("M"))
+                                sexo = "1";
                           
 
                             // GridInternado.DataSource = details; // apresentação dos dados da lista
@@ -587,4 +590,9 @@ public void LimpaCampos()
 
     }
 
+
+    protected void btnLimpar_Click(object sender, EventArgs e)
+    {
+        LimpaCampos();
+    }
 }
