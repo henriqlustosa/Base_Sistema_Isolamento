@@ -23,8 +23,8 @@
                          success: function(data) {
                              response($.map(data.d, function(item) {
                                  return {
-                                     label: item.split('-')[0],
-                                     val: item.split('-')[1]
+                                     label: item.split(';')[0],
+                                     val: item.split(';')[1]
                                  }
                              }))
                          },

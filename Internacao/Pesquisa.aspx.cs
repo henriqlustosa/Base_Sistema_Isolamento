@@ -28,7 +28,7 @@ public partial class Pesquisa_Pesquisa : System.Web.UI.Page
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ConnectionString;
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "SELECT [nome],[rh] FROM [Isolamento].[dbo].[Paciente]  where obito ='0' and nome like @Texto +'%'";
+                cmd.CommandText = "SELECT [nome],[rh] FROM [Isolado_Full].[dbo].[Paciente]  where obito ='0' and nome like @Texto +'%'";
                 cmd.Parameters.AddWithValue("@Texto", prefixo);
                 cmd.Connection = conn;
                 conn.Open();
@@ -36,7 +36,7 @@ public partial class Pesquisa_Pesquisa : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        clientes.Add(string.Format("{0}-{1}", sdr["nome"], sdr["rh"]));
+                        clientes.Add(string.Format("{0};{1}", sdr["nome"], sdr["rh"]));
                     }
                 }
                 conn.Close();
