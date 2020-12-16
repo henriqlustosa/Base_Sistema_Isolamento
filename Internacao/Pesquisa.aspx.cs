@@ -31,7 +31,7 @@ public partial class Pesquisa_Pesquisa : System.Web.UI.Page
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ConnectionString;
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "SELECT [nome],[rh] FROM [Isolado_Full].[dbo].[Paciente]  where obito ='0' and nome like @Texto +'%'";
+                cmd.CommandText = "SELECT [nome],[rh] FROM [Isolamento].[dbo].[Paciente]  where obito ='0' and nome like @Texto +'%'";
                 cmd.Parameters.AddWithValue("@Texto", prefixo);
                 cmd.Connection = conn;
                 conn.Open();
@@ -154,10 +154,10 @@ public partial class Pesquisa_Pesquisa : System.Web.UI.Page
                 using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
                 {
                     SqlCommand cmm = cnn.CreateCommand();
-                    cmm.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolado_FULL].[dbo].[Exame] as e "
-                    + " INNER JOIN [Isolado_FULL].[dbo].[Paciente] as p ON e.rh = p.rh "
-                    + " INNER JOIN [Isolado_FULL].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg "
-                    + " INNER JOIN [Isolado_FULL].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + rh + "  order by dt_resultado ";
+                    cmm.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolamento].[dbo].[Exame] as e "
+                    + " INNER JOIN [Isolamento].[dbo].[Paciente] as p ON e.rh = p.rh "
+                    + " INNER JOIN [Isolamento].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg "
+                    + " INNER JOIN [Isolamento].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + rh + "  order by dt_resultado ";
                     cnn.Open();
                     SqlDataReader dr = cmm.ExecuteReader();
 
@@ -607,10 +607,10 @@ public partial class Pesquisa_Pesquisa : System.Web.UI.Page
         using (SqlConnection cnn5 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
         {
             SqlCommand cmm5 = cnn5.CreateCommand();
-            cmm5.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolado_FULL].[dbo].[Exame] as e "
-            + " INNER JOIN [Isolado_FULL].[dbo].[Paciente] as p ON e.rh = p.rh "
-            + " INNER JOIN [Isolado_FULL].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg "
-            + " INNER JOIN [Isolado_FULL].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + rh + "  order by dt_resultado desc";
+            cmm5.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolamento].[dbo].[Exame] as e "
+            + " INNER JOIN [Isolamento].[dbo].[Paciente] as p ON e.rh = p.rh "
+            + " INNER JOIN [Isolamento].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg "
+            + " INNER JOIN [Isolamento].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + rh + "  order by dt_resultado desc";
             cnn5.Open();
             SqlDataReader dr5 = cmm5.ExecuteReader();
 
@@ -634,10 +634,10 @@ public partial class Pesquisa_Pesquisa : System.Web.UI.Page
         using (SqlConnection cnn5 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
         {
             SqlCommand cmm5 = cnn5.CreateCommand();
-            cmm5.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolado_FULL].[dbo].[Exame] as e "
-            + " INNER JOIN [Isolado_FULL].[dbo].[Paciente] as p ON e.rh = p.rh "
-            + " INNER JOIN [Isolado_FULL].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg "
-            + " INNER JOIN [Isolado_FULL].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + rh + "  order by dt_resultado desc";
+            cmm5.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolamento].[dbo].[Exame] as e "
+            + " INNER JOIN [Isolamento].[dbo].[Paciente] as p ON e.rh = p.rh "
+            + " INNER JOIN [Isolamento].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg "
+            + " INNER JOIN [Isolamento].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + rh + "  order by dt_resultado desc";
             cnn5.Open();
             SqlDataReader dr5 = cmm5.ExecuteReader();
 
