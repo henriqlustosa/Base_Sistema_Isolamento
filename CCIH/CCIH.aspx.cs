@@ -48,6 +48,8 @@ public partial class CCIH : System.Web.UI.Page
                     foreach (Censo detail in details)
                     {
                         cd_prontuario = detail.cd_prontuario;
+                        detail.tempo = BlankFunction(detail.tempo);
+                        detail.tempo = BlankFunctionTempo(detail.tempo);
 
                         // Buscar na Base de Dados do Sistema Isolado se o paciente que se encontra no censo hospitalar já foi alguma vez positivado com MDR 
                         using (SqlConnection cnn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
@@ -59,6 +61,31 @@ public partial class CCIH : System.Web.UI.Page
                             SqlDataReader dr2 = cmm2.ExecuteReader();
                             if (dr2.Read())
                             {
+                                // Consulta para buscar os microrganismos da tabela Exame
+                                using (SqlConnection cnn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringIsolamento"].ToString()))
+                                {
+
+                                    SqlCommand cmm3 = cnn3.CreateCommand();
+                                    cmm2.CommandText = "SELECT p.rh as RH ,p.nome  as Nome ,m.descricao as Microorganismo ,ma.descricao as Sitio , convert(varchar, e.dt_resultado, 103) as 'Data' FROM [Isolamento].[dbo].[Exame] as e " 
+                                                        + " INNER JOIN[Isolamento].[dbo].[Paciente] as p ON e.rh = p.rh " 
+                                                        + " INNER JOIN[Isolamento].[dbo].[tipos_microorganismos] as  m ON e.microorganismo = m.cod_microorg " 
+                                                        + " INNER JOIN[Isolamento].[dbo].[tipos_materiais] as  ma ON e.material = ma.cod_material where p.rh = " + cd_prontuario + " order by dt_resultado ";
+                                    cnn2.Open();
+                                    SqlDataReader dr3 = cmm3.ExecuteReader();
+                                    if (dr3.Read())
+                                    {
+                                        // Consulta para buscar os microrganismos da tabela Exame
+                                        // Adicionar os seguintes campos no gridview RH, Nome, Microorganismo, Sitio, Data
+                                        // Para colocar como apresentação.
+
+                                        
+
+                                        final.Add(detail);
+
+                                    }//if
+
+
+                                }//using
 
 
                                 final.Add(detail);
@@ -116,6 +143,18 @@ public partial class CCIH : System.Web.UI.Page
 
     public override void VerifyRenderingInServerForm(Control control)
     {
+
+    }
+    public static string BlankFunction(string item)
+    {
+        return item ?? " ";
+
+    }
+
+
+    public static string BlankFunctionTempo(string item)
+    {
+        return item.Replace("days", " ").Replace("day", " ").Replace("00:00:00", "0");
 
     }
 
